@@ -70,7 +70,7 @@ function swapTurn(){
 function checkGameOver(){
     let answer= "";
     winningPosition.forEach((position) => {
-       if((gameGrid[position[0]]!=="" || gameGrid[position[1]] !=="" || gameGrid[position[2]] !== "") &&
+       if((gameGrid[position[0]]!=="" && gameGrid[position[1]] !=="" && gameGrid[position[2]] !== "") &&
         (gameGrid[position[0]]== gameGrid[position[1]] && gameGrid[position[1]] == gameGrid[position[2]])) {
             
             // check who the winner is
@@ -89,19 +89,21 @@ function checkGameOver(){
             boxes[position[0]].classList.add("win");
             boxes[position[1]].classList.add("win");
             boxes[position[2]].classList.add("win");
+
+            newGamebtn.classList.add("active");
        }
     });
 
     // if we have a  winner now 
-    if(answer!= "" ){
-        gameInfo.innerText = `Winner Player - ${answer}`;
-        newGamebtn.classList.add("active");
-        return;
-    }
+    let fillCount = 0;
+    gameGrid.forEach((box) => {
+        if(box !== "" )
+            fillCount++;
+    });
 
-    // lets check for tie
-    if(fillCount === 9){
-        gameInfo.innerText ="Game Tied";
+    //board is Filled, game is TIE
+    if(fillCount === 9) {
+        gameInfo.innerText = "Game Tied !";
         newGamebtn.classList.add("active");
     }
 }
